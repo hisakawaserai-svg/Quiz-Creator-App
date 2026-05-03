@@ -25,7 +25,7 @@ window.addEventListener("popstate", (e) => {
     // 1. URLの最後を取得(/page -> page)
     let pageId = location.pathname.split("/").pop();
     // 2. もし空（トップページ）なら "home" にする
-    if(!pageId || pageId == "quiz.html") {
+    if(!pageId || pageId == "index.html") {
         pageId = "home";
     }
     // 3. 画面を切り替える（URLはもう変わっているので、表示だけ変える）
