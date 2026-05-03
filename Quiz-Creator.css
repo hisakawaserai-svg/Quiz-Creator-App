@@ -1,0 +1,401 @@
+:root {
+    --ios-bg: #F2F2F7;         /* 背景グレー */
+    --ios-card-bg: #FFFFFF;    /* カードの白 */
+    --ios-blue: #007AFF;       /* iOS標準の青 */
+    --ios-green: #34C759;      /* iOS標準の緑 */
+    --ios-red: #FF3B30;        /* iOS標準の赤 */
+    --ios-text: #000000;
+    --ios-text-secondary: #8E8E93;
+    --border-radius: 14px;     /* iOS特有の滑らかな角丸 */
+    --font-stack: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+}
+
+/* --- 全体レイアウト --- */
+body {
+    font-family: var(--font-stack);
+    background-color: var(--ios-bg);
+    color: var(--ios-text);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    -webkit-font-smoothing: antialiased; /* 文字を滑らかに */
+
+    overflow-x: hidden;
+    position: relative;
+    width: 100vw;
+    min-height: 100vh;
+    height: auto;
+}
+
+/* --- 管理者機能 --- */
+/* 最初は削除ボタンを非表示にする */
+.delete-btn {
+    /* 文字が縦に並ぶのを防ぐ */
+    white-space: nowrap; 
+
+    /* 中の文字にぴったりの幅にする */
+    width: fit-content;
+    min-width: 50px; /* 最低限の押しやすさを確保（お好みで）*/
+
+    /* 上下左右の余白（これでサイズ感を調整 */
+    padding: 0 15px; 
+    height: 50px;
+
+    display: none;
+    background-color: red;
+    color: white;
+    border: none;
+    cursor: pointer;
+
+    justify-content: center;
+    align-items: center;
+}
+
+/* 管理者モード（bodyにadminクラスがついた時）だけボタンを表示 */
+body.admin .delete-btn {
+    display: flex;
+    z-index: 10;
+}
+
+.quiz-item-wrapper {
+    display: flex;
+    width: 100%;
+    gap: 10px; 
+}
+
+.quiz-load-btn {
+    flex-grow: 1;
+}
+
+
+
+/* --- コンテナ（ページ） --- */
+.page {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    transition: transform 0.4s ease-in-out;
+    transform: translateX(100%);
+    background: linear-gradient(180deg, #f2f2f7, #e5e5ea);
+
+    width: 100%;
+    min-height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+}
+/* #region --ページを捲るように移動--*/
+.page.active{
+    transform: translateX(0);
+}
+/* 進む時 */
+.page.left{
+    transform: translateX(-100%);
+}
+/* 戻るとき */
+.page.right{
+    transform: translateX(100%);
+}
+/* アニメーションを強制オフにするクラス */
+.no-animation {
+    transition: none !important;
+}
+/* #endregion */
+#home {
+    transform: translateX(0);
+}
+
+/* --- ヘッダー・タイトル --- */
+h1 {
+    font-size: 34px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-top: 40px;
+    margin-bottom: 10px;
+    text-align: left; /* iOSは左寄せが多い */
+}
+
+h2 {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 20px 0;
+}
+
+/* --- iOS風カードリスト --- */
+.quiz-form-item, .options-container, #quiz-list-container {
+    background: var(--ios-card-bg);
+    border-radius: var(--border-radius);
+    padding: 16px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+/* --- ボタンデザイン --- */
+button {
+    font-family: var(--font-stack);
+    font-size: 17px;
+    border: none;
+    border-radius: var(--border-radius);
+    padding: 14px;
+    width: 100%;
+    cursor: pointer;
+
+    transition: opacity 0.2s, background-color 0.2s;
+    transition: all 0.2s ease;
+
+    font-weight: 500;
+}
+
+
+/* ボタンにマウスを乗せた時の演出 */
+button:hover {
+    filter: brightness(90%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* タップ時の視覚効果（暗くなる） */
+button:active {
+    opacity: 0.7;
+}
+
+/* クイズ選択ボタン（iOSリスト風） */
+.quiz-load-btn {
+    background-color: var(--ios-card-bg);
+    color: var(--ios-text);
+    text-align: left;
+    border-bottom: 1px solid #E5E5EA;
+    border-radius: 0;
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.quiz-load-btn:first-child { border-top-left-radius: var(--border-radius); border-top-right-radius: var(--border-radius); }
+.quiz-load-btn:last-child { border-bottom-left-radius: var(--border-radius); border-bottom-right-radius: var(--border-radius); border-bottom: none; }
+
+/* クイズ追加ボタン 表示・非表示*/
+#add-quiz-btn{
+    display: block;
+}
+#add-quiz-btn.is-invisible{
+    display: none;
+}
+
+/* 削除ボタン：角に重ねる */
+.remove-btn, .remove-option-btn{
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    
+    width: 25px;
+    height: 25px;
+    background-color: #ff4d4d;
+    color: white;
+    border: 2px solid white; /* 白い縁取りをつけると重なりが綺麗に見える */
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* 影をつけると浮いて見える */
+    text-indent: -9999px;
+}
+/* 「ー」を表示するための擬似要素（さっきの続き） */
+.remove-btn::before {
+    content: "ー";
+    text-indent: 0px;
+}
+
+/* 選択肢ボタン（iOSアクション風） */
+.option-btn {
+    background-color: var(--ios-card-bg);
+    color: var(--ios-blue);
+    margin-bottom: 10px;
+    font-size: 18px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+/* 選択肢の親要素 */
+.options-item {
+    position: relative;
+    margin-bottom: 10px;
+    display: flex;
+    overflow: hidden;
+}
+
+/* ゴミ箱ボタン（最初は隠しておく） */
+.remove-option-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    width: 5px;
+    height: 5px;
+
+    transform: translateX(100%);
+    opacity: 0; /* 透明にする */
+    transition: transform 0.4s ease-in-out, opacity 0.3s ease-in-out;
+
+    text-indent: -9999px;
+}
+
+/* 入力欄にマウスが乗った、または入力中（focus）の時だけ表示 */
+.remove-option-btn.is-visible {
+    opacity: 1; /* 見えるようにする */
+    transform: translateX(0);
+}
+/* 「ー」を表示するための擬似要素（さっきの続き） */
+.remove-option-btn::before {
+    content: "ー";
+    text-indent: 0px;
+}
+
+.options-item:hover input {
+    padding-right: 40px; /* ボタンの幅分だけ避ける */
+    transition: padding 0.3s ease;
+}
+
+/* 保存・追加ボタン（青背景に白文字） */
+#save-all-btn, #result-btn {
+    background-color: var(--ios-blue);
+    color: white;
+    font-weight: 600;
+    margin-top: 30px;
+}
+
+.quiz-form-item{
+    position: relative;
+}
+
+/* --- 入力フィールド --- */
+input[type="text"] {
+    background-color: #F2F2F7;
+    border: none;
+    border-radius: 10px;
+    padding: 12px;
+    font-size: 17px;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 8px 0;
+}
+
+input[type="radio"]{
+    margin-right: 15px;
+}
+
+input:focus {
+    outline: none;
+    background-color: #E5E5EA;
+}
+
+.input-error {
+    background-color: #FFD6D6 !important;
+    border: 1px solid var(--ios-red) !important;
+}
+
+/* --- リンクとナビゲーション --- */
+.navi {
+    display: flex;
+    justify-content: flex-end; /* 右端に寄せる */
+    gap: 15px;                 /* リンク同士の間隔 */
+    margin-top: 20px;
+}
+
+.nav-link {
+    color: var(--ios-blue);
+    text-decoration: none;
+    font-size: 17px;
+}
+
+.nav-link:hover {
+    text-decoration: underline;
+}
+
+/* スコア表示 */
+#result-score {
+    font-size: 48px;
+    font-weight: 800;
+    color: var(--ios-text);
+    display: block;
+    text-align: center;
+    margin: 40px 0;
+}
+/* #endregion */
+/* -------------------------------------------- */
+/* ---#region ログイン--- */
+
+/* ログインボタン */
+.log-in-btn{
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 9999;
+    padding: 0;
+
+    width: 100px;
+    height: 50px;
+
+    cursor: pointer;
+}
+
+/* ログインinputを表示 */
+.log-in-form {
+    /* 🚩 画面右上に固定 */
+    position: fixed;
+    top: 70px;      /* ボタンの下に配置（ボタンの高さに合わせて調整） */
+    right: 20px;    /* 画面右端からの距離 */
+    
+    width: 250px;   /* フォームの幅 */
+    padding: 15px;
+    background: #e0edff; /* 吹き出しの色 */
+    border-radius: 8px;  /* 角を丸くする */
+    z-index: 9999;  /* 最前面に */
+    
+    /* アニメーション用の設定（以前のものを継承） */
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
+  }
+  
+  /* JSでクラスがついた時の表示 */
+  .log-in-form.is-show {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  
+  /* 吹き出しの三角形部分（::after） */
+  .log-in-form:after {
+    content: '';
+    position: absolute;
+    
+    /* 🚩 三角形を「上辺」の「右側」に配置 */
+    bottom: 100%;   /* 本体の真上 */
+    right: 30px;    /* 右端から30pxの位置（ボタンの位置に合わせて調整） */
+    
+    /* 🚩 上向きの三角形を作る */
+    border: 15px solid transparent;        /* 全て透明に */
+    border-bottom: 15px solid #e0edff;   /* 下側だけ色をつけると上向き三角になる */
+    
+    width: 0;
+    height: 0;
+  }
+
+.log-in-p-btn {
+    display: flex;
+    align-items: center; /* 垂直方向（上下）の真ん中に揃える */
+    gap: 5px;            /* 入力欄とボタンの間に少し隙間を作る */
+}
+
+.log-in-input-btn {
+    width: 35%;
+    height: 30%;
+    padding: 5px; 
+
+    flex-shrink: 0; 
+}

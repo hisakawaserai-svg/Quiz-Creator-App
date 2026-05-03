@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="Quiz-Creator.css">
+    <script src="Quiz-Creator.js" defer></script>
+    <title>クイズ</title>
+</head>
+<body id="body">
+    <div class="log-in">
+        <button class="log-in-btn">ログイン</button>
+        <div class="log-in-form">
+            <form class="log-in-inputs">
+                <div class="log-in-p-btn">
+                    <p>管理者としてログイン</p>
+                    <button class="log-in-input-btn">ログイン</button>
+                </div>
+                    <input type="text" class="log-in-id" placeholder="ログインIDを入力">
+                    <input type="text" class="log-in-ps" placeholder="ログインパスワードを入力">
+            </form>
+        </div>
+    </div>
+    <!-- #region ホーム画面-->
+    <div id="home" class="page">
+        <h1>ホーム</h1>
+        <hr>
+        <div id="quiz-selection">
+            <div id="quiz-list-container">
+                </div>
+        </div>
+        <hr>
+        <a href="#" class="nav-link" data-target="edit">クイズ作成画面へ</a>
+    </div>
+    <!-- #endregion -->
+    <!-- #region 問題画面-->
+    <div id="quiz" class="page">
+        <h1 id="quiz-title">クイズのタイトル</h1>
+        <hr>
+        <p id="question-number">第１問</p>
+        <h2 id="question-text">ここに問題が表示されます</h2>
+        <div id="quiz-option">
+            </div>
+
+        <hr>
+        <a href="#" class="nav-link" data-target="home">ホーム画面へ</a>
+    </div>
+    <!--結果画面-->
+    <div id="result" class="page">
+        <h1>クイズ終了！</h1>
+        <p>あなたのスコアは <strong id="result-score"></strong> です！</p>
+        <button id="result-btn" onclick="navigate('home')">ホームへ戻る</button>
+    </div>
+    <!-- #endregion -->
+    <!-- #region 作成・編集画面-->
+    <div id="edit" class="page">
+        <h1>クイズの作成</h1>
+        <div id="quiz-container">
+            <div class="quiz-form-item">
+                <h2>クイズ名</h2>
+                <input type="text" id="quiz-name" placeholder="問題集の名前">
+                <hr>
+                <p>問題 1</p>
+                <h3>問題文を入力</h3>
+                <input type="text" id="quiz-question" placeholder="問題文を入力">
+                <h3>選択肢を入力</h3>
+                <div class="options-container">
+                    <div class="options-item">
+                        <input type="radio" name="correct-1" value="0" checked>
+                        <input type="text" class="option-text" placeholder="選択肢 1">
+                        <button class="remove-option-btn" onclick="deleteOption(this)"></button>
+                    </div>
+                    <div class="options-item">
+                        <input type="radio" name="correct-1" value="1">
+                        <input type="text" class="option-text" placeholder="選択肢 2">
+                        <button class="remove-option-btn" onclick="deleteOption(this)"></button>
+                    </div>
+                </div>
+                <button class="add-option-btn">＋ 選択肢を追加</button>
+            </div>
+        </div>
+        <br>
+        <button id="add-quiz-btn">＋ 新しい問題を追加</button>
+
+        <hr>
+        <button id="save-all-btn">問題集をすべて保存</button>
+
+        <br>
+        <div class="navi">
+            <a href="#" class="nav-link" data-target="home">ホーム画面へ</a>
+        </div>
+    </div>
+    <!-- #endregion -->
+</body>
+</html>
