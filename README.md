@@ -3,16 +3,16 @@
 
 ## スクリーンショット
 
-<h3>ホーム画面</h3>
+### ホーム画面
 <img width="350" src="https://github.com/user-attachments/assets/2a975b58-7259-4910-9f60-38fa79d345c6" alt="ホーム画面">
 
-<h3>作成画面</h3>
+### 作成画面
 <img width="350" src="https://github.com/user-attachments/assets/a8c6dcfa-a8aa-49f4-a744-0ae730376d04" alt="作成画面">
 
-<h3>回答画面</h3>
+### 回答画面
 <img width="350" src="https://github.com/user-attachments/assets/e3adc04a-5b34-43ea-9dde-69ae4bf0153d" alt="回答画面">
 
-<h3>結果画面</h3>
+### 結果画面
 <img width="350" src="https://github.com/user-attachments/assets/fab22a4f-9dbd-491e-803b-aadef4809537" alt="結果画面">
 
 ## 機能
