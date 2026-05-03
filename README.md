@@ -43,8 +43,9 @@
 2. IDとパスワードを入力してログイン
 3. 管理者モードでは各クイズに「削除」ボタンが表示される
 
-id: id
-pass: logInPass
+#### ログインidとパスワード
+- id: id
+- pass: logInPass
 ---
 
 ## 技術的な工夫
@@ -57,6 +58,9 @@ pass: logInPass
 - **権限制御** - ログイン状態に応じてUIを動的に切り替える管理者機能
 
 ---
+
+## デモ
+[![GitHub Pages](https://img.shields.io/badge/Demo-GitHub%20Pages-blue)](https://hisakawaserai-svg.github.io/Quiz-Creator-App/)
 
 ## 今後の改善アイデア
 
